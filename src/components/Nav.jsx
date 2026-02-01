@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function Nav() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary px-4">
         <Link className="navbar-brand d-md-none" to="/">
           <img src="/src/assets/img/logo-small.png" alt="Season GG Logo Image" />
         </Link>
