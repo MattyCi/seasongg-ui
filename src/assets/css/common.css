@@ -225,3 +225,17 @@ body {
 .word-wrap {
 	word-wrap: break-word;
 }
+
+/* outgoing slide: fade out immediately with no delay */
+.carousel-fade .active.carousel-item-start,
+.carousel-fade .active.carousel-item-end {
+  transition: opacity 0.5s ease-in-out;
+  transition-delay: 0s;
+}
+
+/* incoming slide: wait for outgoing slide to finish before fading in */
+.carousel-fade .carousel-item-next,
+.carousel-fade .carousel-item-prev {
+  transition: opacity 0.5s ease-in-out;
+  transition-delay: 0.5s; /* delay matches the fade-out duration */
+}
