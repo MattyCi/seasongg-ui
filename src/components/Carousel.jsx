@@ -1,7 +1,7 @@
 
 export default function Carousel() {
   return (
-    <div id="sgg-carousel" className="carousel carousel-fade slide season-gg-carousel-height season-gg-carousel-width bg-primary py-2 px-4 my-4 mx-lg-auto">
+    <div id="sgg-carousel" className="carousel carousel-fade slide season-gg-carousel-height season-gg-carousel-width bg-primary py-2 px-4 my-4 mx-lg-auto" data-bs-ride="carousel" data-bs-pause="hover">
         <div className="carousel-indicators">
             <button type="button" data-bs-target="#sgg-carousel" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#sgg-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -9,7 +9,7 @@ export default function Carousel() {
         </div>
 
         <div className="carousel-inner">
-          <div className="carousel-item active">
+          <div className="carousel-item active" data-bs-interval="5000">
             <div className="row">
 
               <div id="carousel-text-0" className="col-7 col-sm-6 pl-sm-5 text-white my-auto">
@@ -25,7 +25,7 @@ export default function Carousel() {
             </div>
           </div>
 
-          <div className="carousel-item">
+          <div className="carousel-item" data-bs-interval="5000">
             <div className="row">
               <div id="carousel-text-1" className="col-7 col-sm-6 pl-sm-5 text-white my-auto">
                   <p className="season-gg-carousel-title-text font-weight-bold">Play Rounds</p>
@@ -41,7 +41,7 @@ export default function Carousel() {
             </div>
           </div>
 
-          <div className="carousel-item">
+          <div className="carousel-item" data-bs-interval="5000">
             <div className="row">
               <div id="carousel-text-2" className="col-7 col-sm-6 pl-sm-5 text-white my-auto">
                   <p className="season-gg-carousel-title-text font-weight-bold">Season Standings</p>
