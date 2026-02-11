@@ -9,7 +9,7 @@ export default function App() {
     <div>
       <Nav />
 
-      <main className="container py-4">
+      <main className="container content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
