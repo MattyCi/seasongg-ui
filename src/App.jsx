@@ -6,10 +6,9 @@ import Contact from './pages/Contact'
 
 export default function App() {
   return (
-    <div>
+    <div >
       <Nav />
-
-      <main className="container content">
+      <main>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
