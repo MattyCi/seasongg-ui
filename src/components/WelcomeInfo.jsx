@@ -1,11 +1,11 @@
 export default function WelcomeInfo() {
   return (
-        <div class="row text-center">
-            <div class="col-lg-4 bg-light border pt-4 mt-lg-0">
+        <div className="row text-center">
+            <div className="col-lg-4 bg-light border pt-4 mt-lg-0">
                 <img
                     src="/src/assets/img/trophy.png"
                     alt="Trophy" width="140" height="140" />
-                <p class="h1 pt-1">Compete</p>
+                <p className="h1 pt-1">Compete</p>
                 <p>
                     One game isn't enough to determine who is the best. A true champion can
                     only be proven throughout an entire season of games. Season GG allows you to track scores over
@@ -13,11 +13,11 @@ export default function WelcomeInfo() {
                 </p>
             </div>
             
-            <div class="col-lg-4 bg-light border pt-4 mt-4 mt-lg-0">
-                <img class="rounded-circle"
+            <div className="col-lg-4 bg-light border pt-4 mt-4 mt-lg-0">
+                <img className="rounded-circle"
                     src="/src/assets/img/question.png"
                     alt="Question Mark" width="140" height="140" />
-                <p class="h1 pt-1">How does it Work?</p>
+                <p className="h1 pt-1">How does it Work?</p>
                 <p>
                     Create a season to get started for free, determine when the season will end,
                     and choose a game to play for the duration of the competition.
@@ -32,9 +32,9 @@ export default function WelcomeInfo() {
                 </p>
             </div>
             
-            <div class="col-lg-4 bg-light border pt-4 mt-4 mt-lg-0">
+            <div className="col-lg-4 bg-light border pt-4 mt-4 mt-lg-0">
                 <img src="/src/assets/img/power-button.png" alt="Power Button" width="140" height="140" />
-                <p class="h1 pt-1">Get Started</p>
+                <p className="h1 pt-1">Get Started</p>
                 <p>
                     To get started, create a free account below. Once registered, you can create your 
                     first season.
