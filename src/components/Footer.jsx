@@ -1,5 +1,13 @@
 
+import { useEffect } from 'react';
+import * as bootstrap from 'bootstrap';
+
 export default function Footer() {
+  useEffect(() => {
+    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    popoverTriggerList.map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+  }, []);
+
   return (
     <footer className="footer bg-primary text-white text-center pt-4">
       <div className="container">
@@ -16,11 +24,10 @@ export default function Footer() {
             <a className="navbar-brand" href="/">
               <img className="logo-small" src="/src/assets/img/logo-small.png" />
             </a>
-            <a href="#;" title="Contact Us" data-container="body"
-              data-toggle="popover" data-placement="top"
-              data-content="Please email us at seasonggfeedback@gmail.com to report a bug, leave feedback,
-              or for any other customer support related questions."
-              data-original-title="Contact Us">Contact Us</a>
+            <a href="#;" data-bs-toggle="popover" data-bs-placement="top" data-bs-title="Contact Us"
+              data-bs-content="Please email us at seasonggfeedback@gmail.com to report a bug, leave feedback, or for any other customer support related questions.">
+                Contact Us
+            </a>
           </div>
         </div>
       </div>
