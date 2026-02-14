@@ -11,8 +11,8 @@ export default function HomeLogo() {
         <div class="mt-3 d-none d-md-block">	
             <div class="col text-center">
                 <h1 class="display-4">
-                    <span class="text-success font-weight-bold">Season GG</span>
-                    <small class="text-secondary">take board game rivalry to the next level.</small>
+                    <span class="text-success fw-bold">Season GG</span>
+                    <small class="text-secondary"> take board game rivalry to the next level.</small>
                 </h1>
             </div>
         </div>
