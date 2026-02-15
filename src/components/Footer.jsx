@@ -1,11 +1,10 @@
-
 import { useEffect } from 'react';
-import * as bootstrap from 'bootstrap';
+import { Popover } from 'bootstrap';
 
 export default function Footer() {
   useEffect(() => {
     const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    popoverTriggerList.map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+    popoverTriggerList.map(popoverTriggerEl => new Popover(popoverTriggerEl));
   }, []);
 
   return (
