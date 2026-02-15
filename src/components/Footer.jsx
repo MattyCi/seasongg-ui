@@ -13,8 +13,8 @@ export default function Footer() {
       <div className="container">
         <div className="row justify-content-center align-items-center">
           <div className="col-12">
-            <h5>SEASON GG</h5>
-            <p>Season GG is run and operated by a one man team from the Detroit area of Michigan.</p>
+            <h5 className="text-success fw-bold">SEASON GG</h5>
+            <p className="small">Season GG is run and operated by a one man team from the Detroit area of Michigan.</p>
             <p className="small text-secondary">
               Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors
                 Market</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>.
