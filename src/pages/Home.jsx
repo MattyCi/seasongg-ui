@@ -1,6 +1,7 @@
 import Carousel from "../components/Carousel";
 import HomeLogo from "../components/HomeLogo";
 import LoginInfo from "../components/LoginInfo";
+import RegisterInfo from "../components/RegisterInfo";
 import WelcomeInfo from "../components/WelcomeInfo";
 
 export default function Home() {
@@ -9,7 +10,10 @@ export default function Home() {
       <HomeLogo />
       <Carousel />
       <WelcomeInfo />
-      <LoginInfo />
+      <div className="row my-3 justify-content-around">
+        <LoginInfo />
+        <RegisterInfo />
+      </div>
     </div>
   )
 }
