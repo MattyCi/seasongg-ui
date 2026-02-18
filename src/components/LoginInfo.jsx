@@ -1,37 +1,23 @@
 
 import { useState } from "react"
-
-const API_BASE_URL = "http://localhost:3000";
+import { login } from "../services/Login"
 
 export default function LoginInfo() {
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
+        setError();
 
         try {
-            const response = await fetch(`${API_BASE_URL}/login`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    username: username,
-                    password: password
-                })
-            });
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.errorMessage || "Failed to log in.");
-            }
-            const data = await response.json();
-            localStorage.setItem("access_token", data.access_token);
-            localStorage.setItem("refresh_token", data.refresh_token);
+            await login(username, password);
             window.location.href = "/";
         } catch (error) {
-            setError(error.errorMessage || "Login failed. Please try again.");
+            setError(error.message || "Login failed. Please try again.");
         } finally {
             setLoading(false);
         }
