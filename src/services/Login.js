@@ -1,7 +1,6 @@
-const API_BASE_URL = "http://localhost:3000";
 
 export const login = async (username, password) => {
-    const response = await fetch(`${API_BASE_URL}/login`, {
+    const response = await fetch(`${env.API_BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
