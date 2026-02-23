@@ -37,8 +37,8 @@ export default function LoginInfo() {
                     onChange={(e) => setPassword(e.target.value)}
                     required />
                 <button type="submit" className="btn btn-success btn-rspnsv btn-lg my-2" disabled={loading}>
-                    {loading ? <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                    {loading ? <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div> : "Log In"}
                 </button>
             </form>
