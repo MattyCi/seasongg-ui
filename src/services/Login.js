@@ -15,7 +15,9 @@ export const login = async (username, password) => {
     }
 
     const data = await response.json();
-    localStorage.setItem("access_token", data.access_token);
-    localStorage.setItem("refresh_token", data.refresh_token);
+    // TODO: implement "remember me" functionality
+    // TODO: implement refresh token logic
+    sessionStorage.setItem("access_token", data.access_token);
+    sessionStorage.setItem("refresh_token", data.refresh_token);
     return data;
 };
