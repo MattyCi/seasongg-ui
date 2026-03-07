@@ -36,7 +36,7 @@ export default function RegisterInfo() {
             <form id="registerForm" className={validated ? "was-validated" : ""} onSubmit={handleRegister} noValidate>
                 <h1 className="h3 font-weight-normal text-center">Or, register below.</h1>
                 {error && <div className="alert alert-danger" role="alert">{error}</div>}
-                <input name="username" type="text" className="form-control my-2" id="register-username" placeholder="Enter Username"
+                <input name="username" type="text" className="form-control my-2" id="register-username" placeholder="Enter Username" autoComplete="off"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required />

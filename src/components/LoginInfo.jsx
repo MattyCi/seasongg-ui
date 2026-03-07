@@ -34,7 +34,7 @@ export default function LoginInfo() {
             <form id="loginForm" className={validated ? "was-validated" : ""} onSubmit={handleLogin} noValidate>
                 <h1 className="h3 font-weight-normal text-center">Please sign in.</h1>
                 {error && <div className="alert alert-danger" role="alert">{error}</div>}
-                <input name="username" type="text" className="form-control my-2" id="login-username" placeholder="Enter Username"
+                <input name="username" type="text" className="form-control my-2" id="login-username" placeholder="Enter Username" autoComplete="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required />
