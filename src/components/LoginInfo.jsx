@@ -5,16 +5,15 @@ import { login } from "../services/Login"
 export default function LoginInfo() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [validated, setValidated] = useState(false);
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setError();
-        setValidated(true);
 
         if (!username || !password) {
+            setError("Must provide username and password.");
             return;
         }
 
@@ -31,7 +30,7 @@ export default function LoginInfo() {
 
     return (
         <div className="col-md-6 col-lg-4 my-2">
-            <form id="loginForm" className={validated ? "was-validated" : ""} onSubmit={handleLogin} noValidate>
+            <form id="loginForm" onSubmit={handleLogin} noValidate>
                 <h1 className="h3 font-weight-normal text-center">Please sign in.</h1>
                 {error && <div className="alert alert-danger" role="alert">{error}</div>}
                 <input name="username" type="text" className="form-control my-2" id="login-username" placeholder="Enter Username" autoComplete="username"
