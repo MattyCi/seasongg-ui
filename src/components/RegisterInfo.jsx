@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { register } from "../services/Register"
+import { login } from "../services/Login"
 
 export default function RegisterInfo() {
     const [username, setUsername] = useState("");
@@ -21,7 +22,8 @@ export default function RegisterInfo() {
         try {
             setLoading(true);
             await register(username, password, passwordVerify);
-            window.location.href = "/";
+            await login(username, password);
+            window.location.reload();
         } catch (error) {
             setError(error.message || "Registration failed. Please try again.");
         } finally {
