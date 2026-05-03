@@ -6,11 +6,12 @@ import WelcomeInfo from "../components/WelcomeInfo";
 import useToken from "../services/useToken";
 
 export default function Home() {
-  const { token, setToken } = useToken();
+  const [token, setToken] = useToken();
 
   return (
     // TODO: display user home if token exists, otherwise show login/register
     <div className="container">
+      <p>{token}</p>
       <HomeLogo />
       <Carousel />
       <WelcomeInfo />

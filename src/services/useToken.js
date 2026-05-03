@@ -10,9 +10,16 @@ export default function useToken() {
     return token;
   };
 
-  const [token, setToken] = useState(getToken());
+  const [token, setTokenState] = useState(getToken());
 
-    return {
-    token
-  }
+  const setToken = (newToken) => {
+    if (newToken) {
+      sessionStorage.setItem('access_token', newToken);
+    } else {
+      sessionStorage.removeItem('access_token');
+    }
+    setTokenState(newToken);
+  };
+
+  return [token, setToken];
 }
