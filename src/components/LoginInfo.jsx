@@ -1,12 +1,13 @@
 
 import { useState } from "react"
-import { login } from "../services/Login"
+import { useAuth } from "../contexts/AuthContext"
 
 export default function LoginInfo() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
+    const { login } = useAuth();
 
     const handleLogin = async (e) => {
         e.preventDefault();

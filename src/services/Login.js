@@ -1,6 +1,4 @@
 
-import useToken from "./useToken";
-
 export const login = async (username, password) => {
     const response = await fetch(`${import.meta.env.SGG_API_BASE_URL}/login`, {
         method: "POST",
@@ -19,8 +17,5 @@ export const login = async (username, password) => {
     const data = await response.json();
     // TODO: implement "remember me" functionality
     // TODO: implement refresh token logic
-    const [token, setToken] = useToken();
-    setToken(data.access_token);
-    sessionStorage.setItem("refresh_token", data.refresh_token);
     return data;
 };

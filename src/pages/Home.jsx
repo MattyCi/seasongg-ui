@@ -3,15 +3,15 @@ import HomeLogo from "../components/HomeLogo";
 import LoginInfo from "../components/LoginInfo";
 import RegisterInfo from "../components/RegisterInfo";
 import WelcomeInfo from "../components/WelcomeInfo";
-import useToken from "../services/useToken";
+import { useAuth } from '../contexts/AuthContext';
 
-export default function Home() {
-  const [token, setToken] = useToken();
-
+export default function Home() { 
+  const { isAuthenticated } = useAuth();
   return (
     // TODO: display user home if token exists, otherwise show login/register
     <div className="container">
-      <p>{token}</p>
+      <h1>isAuthenticated : {String(isAuthenticated)}</h1>
+      {isAuthenticated ? <p>logged in!</p> : <p>logged out...</p>}
       <HomeLogo />
       <Carousel />
       <WelcomeInfo />
