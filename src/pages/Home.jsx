@@ -10,8 +10,6 @@ export default function Home() {
   return (
     // TODO: display user home if token exists, otherwise show login/register
     <div className="container">
-      <h1>isAuthenticated : {String(isAuthenticated)}</h1>
-      {isAuthenticated ? <p>logged in!</p> : <p>logged out...</p>}
       <HomeLogo />
       <Carousel />
       <WelcomeInfo />

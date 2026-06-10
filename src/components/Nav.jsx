@@ -1,6 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function Nav() {
+  const navigate = useNavigate()
+  const { isAuthenticated, logout } = useAuth()
+
+  const handleLogout = () => {
+    logout()
+    window.location.href = '/'
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary px-4">
         <Link className="navbar-brand d-md-none" to="/">
@@ -27,7 +36,16 @@ export default function Nav() {
             <li className="nav-item">
               <Link className="nav-link" to="/viewSeasonList?view=allSeasonsList">All Seasons</Link>
             </li>
+          {isAuthenticated && (
+            <li className="nav-item">
+              <Link className="nav-link" onClick={handleLogout}>
+                Logout
+              </Link>
+            </li>
+          )}
           </ul>
+
+
         </div>
     </nav>
   )
