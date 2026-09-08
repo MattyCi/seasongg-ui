@@ -131,7 +131,7 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
                     <div className="d-flex align-items-start justify-content-between mb-2">
                       <div className="d-flex align-items-center gap-2">
                         <img
-                          src={season.game?.image || missingGameImage}
+                          src={season.game?.thumbnail || missingGameImage}
                           alt=""
                           width="36"
                           height="36"
