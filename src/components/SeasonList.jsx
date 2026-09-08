@@ -102,7 +102,7 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
         <>
           <div className="row g-3 mb-3">
             {data.content.map((season) => (
-              <div className="col-12 col-md-6" key={season.id}>
+              <div className="col-12 col-md-6" key={season.seasonId}>
                 <Link to={`/season/${season.id}`} className="card h-100 text-decoration-none text-body shadow-sm">
                   <div className="card-body">
                     <div className="d-flex align-items-start justify-content-between mb-2">
