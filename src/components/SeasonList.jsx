@@ -3,14 +3,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import missingGameImage from "../assets/img/missing-game-image.png";
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 2;
 
-/**
- * Displays a paginated list of seasons.
- *
- * @param {"mine"|"all"} initialView - which seasons to show first. Defaults to "mine".
- * @param {boolean} showToggle - whether to show the "Your Seasons" / "All Seasons" switch. Defaults to true.
- */
 export default function SeasonList({ initialView = "mine", showToggle = true }) {
   const { token } = useAuth();
 
@@ -49,12 +43,6 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
         if (cancelled) return;
           // page responses may omit "content" entirely when the page is empty
           const content = Array.isArray(body.content) ? body.content : [];
-          if (!Array.isArray(body.content) && body.totalSize > 0) {
-            console.error(
-              "Missing 'content' array on a non-empty Page response:",
-              body
-            );
-          }
           setData({ ...body, content });
       })
       .catch((err) => {
@@ -79,18 +67,10 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
     <div>
       {showToggle && (
         <div className="btn-group mb-3" role="group">
-          <button
-            type="button"
-            className={`btn btn-sm ${view === "mine" ? "btn-primary" : "btn-outline-primary"}`}
-            onClick={() => switchView("mine")}
-          >
+          <button type="button" className={`btn btn-sm ${view === "mine" ? "btn-primary" : "btn-outline-primary"}`} onClick={() => switchView("mine")} >
             Your Seasons
           </button>
-          <button
-            type="button"
-            className={`btn btn-sm ${view === "all" ? "btn-primary" : "btn-outline-primary"}`}
-            onClick={() => switchView("all")}
-          >
+          <button type="button" className={`btn btn-sm ${view === "all" ? "btn-primary" : "btn-outline-primary"}`} onClick={() => switchView("all")} >
             All Seasons
           </button>
         </div>
@@ -123,33 +103,17 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
           <div className="row g-3 mb-3">
             {data.content.map((season) => (
               <div className="col-12 col-md-6" key={season.id}>
-                <Link
-                  to={`/season/${season.id}`}
-                  className="card h-100 text-decoration-none text-body shadow-sm"
-                >
+                <Link to={`/season/${season.id}`} className="card h-100 text-decoration-none text-body shadow-sm">
                   <div className="card-body">
                     <div className="d-flex align-items-start justify-content-between mb-2">
                       <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={season.game?.thumbnail || missingGameImage}
-                          alt=""
-                          width="36"
-                          height="36"
-                          className="rounded"
-                          style={{ objectFit: "cover" }}
-                        />
+                        <img src={season.game?.thumbnail || missingGameImage} alt="" width="36" height="36" className="rounded" style={{ objectFit: "cover" }} />
                         <div>
                           <div className="fw-bold">{season.name}</div>
-                          {season.game?.name && (
                             <small className="text-muted">{season.game.name}</small>
-                          )}
                         </div>
                       </div>
-                      <span
-                        className={`badge ${
-                          season.status === "ACTIVE" ? "bg-success" : "bg-secondary"
-                        }`}
-                      >
+                      <span className={`badge ${season.status === "ACTIVE" ? "bg-success" : "bg-secondary"}`}>
                         {season.status === "ACTIVE" ? "Active" : "Ended"}
                       </span>
                     </div>
@@ -178,20 +142,12 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
             <nav aria-label="Season list pagination">
               <ul className="pagination pagination-sm mb-0">
                 <li className={`page-item ${page === 0 ? "disabled" : ""}`}>
-                  <button
-                    className="page-link"
-                    onClick={() => setPage((p) => p - 1)}
-                    disabled={page === 0}
-                  >
+                  <button className="page-link" onClick={() => setPage((p) => p - 1)} disabled={page === 0}>
                     Prev
                   </button>
                 </li>
                 <li className={`page-item ${page + 1 >= totalPages ? "disabled" : ""}`}>
-                  <button
-                    className="page-link"
-                    onClick={() => setPage((p) => p + 1)}
-                    disabled={page + 1 >= totalPages}
-                  >
+                  <button className="page-link" onClick={() => setPage((p) => p + 1)} disabled={page + 1 >= totalPages}>
                     Next
                   </button>
                 </li>
