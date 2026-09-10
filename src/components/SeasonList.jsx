@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import missingGameImage from "../assets/img/missing-game-image.png";
+import CreateSeasonForm from "./CreateSeasonForm";
 
 const PAGE_SIZE = 2;
 
@@ -10,10 +11,20 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
 
   const [view, setView] = useState(initialView);
   const [page, setPage] = useState(0);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [showCreateModal, setShowCreateModal] = useState(false);
+
+  const handleSeasonCreated = () => {
+    setShowCreateModal(false);
+    setView("mine");
+    setPage(0);
+    setRefreshKey((k) => k + 1);
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -54,7 +65,7 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
     return () => {
       cancelled = true;
     };
-  }, [view, page, token]);
+  }, [view, page, token, refreshKey]);
 
   const switchView = (nextView) => {
     setView(nextView);
@@ -90,17 +101,32 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
         </div>
       )}
 
-      {!loading && !error && data && data.content.length === 0 && (
-        <div className="alert alert-secondary" role="alert">
-          {view === "all"
-            ? "No seasons have been created yet. Be the first to get one started!"
-            : "You aren't part of any seasons yet. Go start one with your friends!"}
-        </div>
-      )}
-
-      {!loading && !error && data && data.content.length > 0 && (
+      {!loading && !error && data && (
         <>
           <div className="row g-3 mb-3">
+            {view === "mine" && (
+              <div className="col-12 col-md-6">
+                <button
+                  type="button"
+                  onClick={() => setShowCreateModal(true)}
+                  className="card h-100 w-100 border-2 border-primary text-primary bg-transparent"
+                  style={{ borderStyle: "dashed" }}
+                >
+                  <div className="card-body d-flex align-items-center gap-2">
+                    <span
+                      className="d-flex align-items-center justify-content-center rounded-circle bg-primary text-white flex-shrink-0"
+                      style={{ width: 38, height: 38, fontSize: "1.25rem", lineHeight: 1 }}
+                    >
+                      +
+                    </span>
+                    <span className="text-start">
+                      <span className="d-block fw-bold">Create a season</span>
+                      <small className="text-muted">Start tracking a new game season</small>
+                    </span>
+                  </div>
+                </button>
+              </div>
+            )}
             {data.content.map((season) => (
               <div className="col-12 col-md-6" key={season.seasonId}>
                 <Link to={`/season/${season.id}`} className="card h-100 text-decoration-none text-body shadow-sm">
@@ -135,27 +161,35 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
             ))}
           </div>
 
-          <div className="d-flex align-items-center justify-content-between">
-            <small className="text-muted">
-              Page {data.pageNumber + 1} of {totalPages}
-            </small>
-            <nav aria-label="Season list pagination">
-              <ul className="pagination pagination-sm mb-0">
-                <li className={`page-item ${page === 0 ? "disabled" : ""}`}>
-                  <button className="page-link" onClick={() => setPage((p) => p - 1)} disabled={page === 0}>
-                    Prev
-                  </button>
-                </li>
-                <li className={`page-item ${page + 1 >= totalPages ? "disabled" : ""}`}>
-                  <button className="page-link" onClick={() => setPage((p) => p + 1)} disabled={page + 1 >= totalPages}>
-                    Next
-                  </button>
-                </li>
-              </ul>
-            </nav>
-          </div>
+          {totalPages > 1 && (
+            <div className="d-flex align-items-center justify-content-between">
+              <small className="text-muted">
+                Page {data.pageNumber + 1} of {totalPages}
+              </small>
+              <nav aria-label="Season list pagination">
+                <ul className="pagination pagination-sm mb-0">
+                  <li className={`page-item ${page === 0 ? "disabled" : ""}`}>
+                    <button className="page-link" onClick={() => setPage((p) => p - 1)} disabled={page === 0}>
+                      Prev
+                    </button>
+                  </li>
+                  <li className={`page-item ${page + 1 >= totalPages ? "disabled" : ""}`}>
+                    <button className="page-link" onClick={() => setPage((p) => p + 1)} disabled={page + 1 >= totalPages}>
+                      Next
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          )}
         </>
       )}
+
+      <CreateSeasonForm
+        show={showCreateModal}
+        onClose={() => setShowCreateModal(false)}
+        onCreated={handleSeasonCreated}
+      />
     </div>
   );
 }
