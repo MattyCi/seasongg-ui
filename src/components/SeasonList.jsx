@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import missingGameImage from "../assets/img/missing-game-image.png";
 import CreateSeasonForm from "./CreateSeasonForm";
 
-const PAGE_SIZE = 2;
+const PAGE_SIZE = 4;
 
 export default function SeasonList({ initialView = "mine", showToggle = true }) {
   const { token } = useAuth();
@@ -77,14 +77,32 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
   return (
     <div>
       {showToggle && (
-        <div className="btn-group mb-3" role="group">
-          <button type="button" className={`btn btn-sm ${view === "mine" ? "btn-primary" : "btn-outline-primary"}`} onClick={() => switchView("mine")} >
-            Your Seasons
-          </button>
-          <button type="button" className={`btn btn-sm ${view === "all" ? "btn-primary" : "btn-outline-primary"}`} onClick={() => switchView("all")} >
-            All Seasons
-          </button>
-        </div>
+        <>
+          <div className="d-flex d-md-none gap-2 mb-3">
+            <button type="button" className={`btn btn-sm flex-fill ${view === "mine" ? "btn-primary" : "btn-outline-primary"}`} onClick={() => switchView("mine")} >
+              Your Seasons
+            </button>
+            <button type="button" className={`btn btn-sm flex-fill ${view === "all" ? "btn-primary" : "btn-outline-primary"}`} onClick={() => switchView("all")} >
+              All Seasons
+            </button>
+          </div>
+
+          <div className="d-none d-md-flex align-items-center justify-content-between mb-3">
+            <div className="btn-group" role="group">
+              <button type="button" className={`btn btn-sm ${view === "mine" ? "btn-primary" : "btn-outline-primary"}`} onClick={() => switchView("mine")} >
+                Your Seasons
+              </button>
+              <button type="button" className={`btn btn-sm ${view === "all" ? "btn-primary" : "btn-outline-primary"}`} onClick={() => switchView("all")} >
+                All Seasons
+              </button>
+            </div>
+            {view === "mine" && (
+              <button type="button" className="btn btn-primary btn-sm" onClick={() => setShowCreateModal(true)}>
+                <strong>+</strong> Create Season
+              </button>
+            )}
+          </div>
+        </>
       )}
 
       {loading && (
@@ -105,7 +123,7 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
         <>
           <div className="row g-3 mb-3">
             {view === "mine" && (
-              <div className="col-12 col-md-6">
+              <div className="col-12 col-md-6 d-md-none">
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(true)}
