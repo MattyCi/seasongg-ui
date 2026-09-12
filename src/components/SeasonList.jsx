@@ -145,7 +145,9 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
                 </button>
               </div>
             )}
-            {data.content.map((season) => (
+            {data.content.map((season) => {
+              const leaders = getLeaders(season);
+              return (
               <div className="col-12 col-md-6" key={season.seasonId}>
                 <Link to={`/season/${season.id}`} className="card h-100 text-decoration-none text-body shadow-sm">
                   <div className="card-body">
@@ -161,6 +163,16 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
                         {season.status === "ACTIVE" ? "Active" : "Ended"}
                       </span>
                     </div>
+                    {leaders.length > 0 && (
+                      <div className="small mb-1">
+                        {leaders.map((standing, index) => (
+                          <span key={standing.seasonStandingId}>
+                            <span className="text-muted">Current leader: {standing.user.username} {index < leaders.length - 1 ? ", " : ""}</span>
+                          </span>
+                        ))}
+                        <span className="text-warning">🏆</span>{" "}
+                      </div>
+                    )}
                     <hr className="my-2" />
                     <div className="d-flex justify-content-between small text-muted flex-wrap gap-1">
                       <span>
@@ -173,7 +185,8 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
                   </div>
                 </Link>
               </div>
-            ))}
+              );
+            })}
           </div>
 
           {totalPages > 1 && (
@@ -207,6 +220,11 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
       />
     </div>
   );
+}
+
+function getLeaders(season) {
+  if (!Array.isArray(season.standings)) return [];
+  return season.standings.filter((standing) => standing.place === 1);
 }
 
 function formatDate(dateString) {
