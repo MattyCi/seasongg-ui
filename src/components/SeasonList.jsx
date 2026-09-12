@@ -162,12 +162,9 @@ export default function SeasonList({ initialView = "mine", showToggle = true }) 
                       </span>
                     </div>
                     <hr className="my-2" />
-                    <div className="d-flex justify-content-between small text-muted">
+                    <div className="d-flex justify-content-between small text-muted flex-wrap gap-1">
                       <span>
-                        {season.status === "ACTIVE" ? "Started" : "Ended"}{" "}
-                        {formatDate(
-                          season.status === "ACTIVE" ? season.startDate : season.endDate
-                        )}
+                        {new Date(season.endDate) < new Date() ? "Ended" : "Ends"} {formatDate(season.endDate)}
                       </span>
                       {Array.isArray(season.rounds) && (
                         <span>{season.rounds.length} rounds</span>
