@@ -1,24 +1,60 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { createSeason } from "../services/Seasons"
+import { getGame } from "../services/Games"
 import { useAuth } from "../contexts/AuthContext"
+import GameSearch from "./GameSearch"
+import GameDetails from "./GameDetails"
 
 export default function CreateSeasonForm({ show, onClose, onCreated }) {
     const { token } = useAuth();
 
     const [name, setName] = useState("");
-    const [gameId, setGameId] = useState("");
+    const [game, setGame] = useState(null);
+    const [gameDetails, setGameDetails] = useState(null);
+    const [detailsLoading, setDetailsLoading] = useState(false);
+    const [detailsError, setDetailsError] = useState();
     const [endDate, setEndDate] = useState("");
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
     const [validated, setValidated] = useState(false);
 
+    // Fetch full details whenever a game is selected
+    useEffect(() => {
+        setGameDetails(null);
+        setDetailsError();
+
+        if (!game) {
+            setDetailsLoading(false);
+            return;
+        }
+
+        const controller = new AbortController();
+        (async () => {
+            try {
+                setDetailsLoading(true);
+                setGameDetails(await getGame(game.gameId, token, controller.signal));
+            } catch (err) {
+                if (err.name !== "AbortError") {
+                    setDetailsError("Couldn't load full details, but you can still use this game.");
+                }
+            } finally {
+                if (!controller.signal.aborted) setDetailsLoading(false);
+            }
+        })();
+
+        return () => controller.abort();
+    }, [game?.gameId, token]);
+
     if (!show) {
         return null;
     }
 
+    // Details from the game endpoint override the basic search/popular data
+    const selectedGame = game ? { ...game, ...gameDetails } : null;
+
     const resetForm = () => {
         setName("");
-        setGameId("");
+        setGame(null);
         setEndDate("");
         setValidated(false);
         setError();
@@ -42,7 +78,7 @@ export default function CreateSeasonForm({ show, onClose, onCreated }) {
 
         try {
             setLoading(true);
-            const season = await createSeason(name, endDate, gameId, token);
+            const season = await createSeason(name, endDate, selectedGame, token);
             resetForm();
             onCreated(season);
         } catch (error) {
@@ -66,7 +102,7 @@ export default function CreateSeasonForm({ show, onClose, onCreated }) {
                                 {error && <div className="alert alert-danger py-2" role="alert">{error}</div>}
 
                                 <div className="input-group has-validation">
-                                    <input name="name" type="text" className="form-control mb-3" id="season-name" placeholder="e.g. Dominion Winter 2026" autoComplete="off"
+                                    <input name="name" type="text" className="form-control mb-3" id="season-name" placeholder="Season Name" autoComplete="off"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                         required
@@ -76,17 +112,10 @@ export default function CreateSeasonForm({ show, onClose, onCreated }) {
                                 </div>
 
                                 <div className="input-group has-validation">
-                                    {/* TODO: swap for a real game search/picker component once the games endpoint is wired up */}
-                                    <select name="gameId" className="form-select mb-3" id="season-game"
-                                        value={gameId}
-                                        onChange={(e) => setGameId(e.target.value)}
-                                        required>
-                                        <option value="" disabled>Select a game&hellip;</option>
-                                        <option value="13">Dominion</option>
-                                        <option value="27">Wingspan</option>
-                                    </select>
-                                    <div className="invalid-feedback">Please select a game.</div>
+                                    <GameSearch value={game} onChange={setGame} />
                                 </div>
+
+                                <GameDetails game={selectedGame} loading={detailsLoading} error={detailsError} onClear={() => setGame(null)} />
 
                                 <div className="input-group has-validation">
                                     <input name="endDate" type="date" className="form-control mb-3" id="season-end-date"
@@ -100,7 +129,7 @@ export default function CreateSeasonForm({ show, onClose, onCreated }) {
                                 <button type="button" className="btn btn-outline-secondary" onClick={handleClose}>
                                     Cancel
                                 </button>
-                                <button type="submit" className="btn btn-primary" disabled={loading}>
+                                <button type="submit" className="btn btn-primary" disabled={loading || detailsLoading}>
                                     {loading ? <div className="spinner-border spinner-border-sm" role="status">
                                         <span className="visually-hidden">Loading...</span>
                                     </div> : "Create season"}
