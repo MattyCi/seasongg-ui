@@ -9,7 +9,7 @@ html {
 }
 
 body {
-	margin-bottom: 125px; /* Must remain consistent as footer height */
+	margin-bottom: calc(125px + 2rem); /* Must remain consistent as footer height */
 }
 
 .footer {

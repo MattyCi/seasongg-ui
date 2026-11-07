@@ -1,8 +1,4 @@
-import Carousel from "./Carousel";
-import HomeLogo from "./HomeLogo";
-import LoginInfo from "./LoginInfo";
-import RegisterInfo from "./RegisterInfo";
-import WelcomeInfo from "./WelcomeInfo";
+
 import SeasonList from "./SeasonList";
 import { useAuth } from '../contexts/AuthContext';
 
