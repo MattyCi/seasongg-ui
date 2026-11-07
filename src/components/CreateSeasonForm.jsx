@@ -18,7 +18,6 @@ export default function CreateSeasonForm({ show, onClose, onCreated }) {
     const [loading, setLoading] = useState(false);
     const [validated, setValidated] = useState(false);
 
-    // Fetch full details whenever a game is selected
     useEffect(() => {
         setGameDetails(null);
         setDetailsError();
@@ -49,8 +48,9 @@ export default function CreateSeasonForm({ show, onClose, onCreated }) {
         return null;
     }
 
-    // Details from the game endpoint override the basic search/popular data
     const selectedGame = game ? { ...game, ...gameDetails } : null;
+
+    const tomorrow = new Date(Date.now() + 86400000).toLocaleDateString("en-CA");
 
     const resetForm = () => {
         setName("");
@@ -78,7 +78,10 @@ export default function CreateSeasonForm({ show, onClose, onCreated }) {
 
         try {
             setLoading(true);
-            const season = await createSeason(name, endDate, selectedGame, token);
+            const season = await createSeason(
+                { name, endDate, game: selectedGame },
+                token
+            );
             resetForm();
             onCreated(season);
         } catch (error) {
@@ -101,14 +104,15 @@ export default function CreateSeasonForm({ show, onClose, onCreated }) {
                             <div className="modal-body">
                                 {error && <div className="alert alert-danger py-2" role="alert">{error}</div>}
 
+                                <label htmlFor="season-name" className="form-label">Season Name</label>
                                 <div className="input-group has-validation">
-                                    <input name="name" type="text" className="form-control mb-3" id="season-name" placeholder="Season Name" autoComplete="off"
+                                    <input name="name" type="text" className="form-control mb-3" id="season-name" autoComplete="off"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                         required
                                         minLength="3"
-                                        maxLength="64" />
-                                    <div className="invalid-feedback">Season name must be 3-64 characters.</div>
+                                        maxLength="56" />
+                                    <div className="invalid-feedback">Season name must be 3-56 characters.</div>
                                 </div>
 
                                 <div className="input-group has-validation">
@@ -117,12 +121,17 @@ export default function CreateSeasonForm({ show, onClose, onCreated }) {
 
                                 <GameDetails game={selectedGame} loading={detailsLoading} error={detailsError} onClear={() => setGame(null)} />
 
+                                <label htmlFor="season-end-date" className="form-label">End Date</label>
+                                <div id="season-end-date-help" className="form-text mt-0 mb-2">
+                                    The season will end at 12:00 AM (midnight) on the date you pick. Whoever is leading the season at that time will be crowned champion.
+                                </div>
                                 <div className="input-group has-validation">
                                     <input name="endDate" type="date" className="form-control mb-3" id="season-end-date"
                                         value={endDate}
                                         onChange={(e) => setEndDate(e.target.value)}
+                                        min={tomorrow}
                                         required />
-                                    <div className="invalid-feedback">End date is required.</div>
+                                    <div className="invalid-feedback">Please choose an end date that is tomorrow or later.</div>
                                 </div>
                             </div>
                             <div className="modal-footer">

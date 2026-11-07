@@ -102,12 +102,12 @@ export default function GameSearch({ value, onChange }) {
 
     return (
         <div className="position-relative w-100 mb-3">
+            <label htmlFor="season-game" className="form-label">Search for a Game...</label>
             <input
                 ref={inputRef}
                 type="text"
                 className="form-control"
                 id="season-game"
-                placeholder="Search for a game…"
                 autoComplete="off"
                 value={query}
                 onChange={(e) => { setQuery(e.target.value); setOpen(true); }}
@@ -115,6 +115,11 @@ export default function GameSearch({ value, onChange }) {
                 onBlur={() => setOpen(false)}
             />
             <div className="invalid-feedback">Please search for and select a game.</div>
+
+            <a href="https://boardgamegeek.com" target="_blank" rel="noopener noreferrer"
+                className="d-inline-block mt-1" title="Game data powered by BoardGameGeek">
+                <img src="/src/assets/img/powered_by_bgg.jpg" alt="Powered by BGG" height="36" />
+            </a>
 
             {open && (
                 <ul className="list-group position-absolute w-100 shadow"
